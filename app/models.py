@@ -23,4 +23,4 @@ def load_user(id):
 class Page(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64))
-    content = db.Column(db.Text)
+    template_name = db.Column(db.String(64))
