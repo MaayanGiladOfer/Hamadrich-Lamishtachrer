@@ -15,10 +15,9 @@ def signup():
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Congratulations, you are now a registered user!')
         login_user(user)
         return redirect(url_for('page', page_id=1))
-    return render_template('signup.html', title='Sign Up', form=form)
+    return render_template('signup.html', title='Sign Up', form=form, show_progress=False)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -35,7 +34,7 @@ def login():
         if not next_page or urlparse(next_page).netloc != '':
             next_page = url_for('page', page_id=user.last_page_id or 1)
         return redirect(next_page)
-    return render_template('login.html', title='Sign In', form=form)
+    return render_template('login.html', title='Sign In', form=form, show_progress=False)
 
 @app.route('/logout')
 def logout():
@@ -47,7 +46,7 @@ def logout():
 def home():
     if current_user.is_authenticated:
         return redirect(url_for('page', page_id=current_user.last_page_id or 1))
-    return render_template('home.html', title='Home')
+    return render_template('home.html', title='Home', show_progress=False)
 
 @app.route('/page/<int:page_id>', methods=['GET', 'POST'])
 @login_required
@@ -55,4 +54,6 @@ def page(page_id):
     page = Page.query.get_or_404(page_id)
     current_user.last_page_id = page_id
     db.session.commit()
-    return render_template(page.template_name, title=page.title)
+    total_pages = Page.query.count()
+    progress = round((page_id / total_pages) * 100)
+    return render_template(page.template_name, title=page.title, progress=progress, show_progress=True)

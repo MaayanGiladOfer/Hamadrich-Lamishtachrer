@@ -1,5 +1,9 @@
 {% extends "base.html" %} {% block content %}
-<h1>Welcome to Page 1</h1>
-<p>This is a basic example of a page extending from the base layout.</p>
-<a href="{{ url_for('page', page_id=2) }}" class="btn btn-primary">Next</a>
-{% endblock %}
+<div style="direction: rtl; text-align: right">
+  <h1>ברוכים הבאים!</h1>
+  <p>מלל מלל ועוד מלל</p>
+  <a href="{{ url_for('page', page_id=2) }}" class="btn btn-primary"
+    >עמוד הבא</a
+  >
+  {% endblock %}
+</div>

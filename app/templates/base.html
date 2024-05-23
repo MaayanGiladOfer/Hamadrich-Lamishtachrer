@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{% block title %}{% endblock %} - Flask App</title>
+    <title>{% block title %}{% endblock %} המדריך למשתחרר</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
@@ -9,21 +9,36 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+            <a class="nav-link" href="{{ url_for('logout') }}">יציאה</a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+            <a class="nav-link" href="{{ url_for('login') }}">כניסה</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('signup') }}">Register</a>
+            <a class="nav-link" href="{{ url_for('signup') }}">הרשמה</a>
           </li>
           {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('home') }}"
+              ><strong>ראשי</strong></a
+            >
+          </li>
         </ul>
       </div>
     </nav>
@@ -31,7 +46,23 @@
       {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %} {% for category, message in messages %}
       <div class="alert alert-{{ category }}">{{ message }}</div>
-      {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+      {% endfor %} {% endif %} {% endwith %} {% if show_progress %}
+      <div class="progress">
+        <div
+          class="progress-bar"
+          role="progressbar"
+          style="width: {{ progress }}%;"
+          aria-valuenow="{{ progress }}"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          {{ progress }}%
+        </div>
+      </div>
+      {% endif %} {% block content %}{% endblock %}
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>
