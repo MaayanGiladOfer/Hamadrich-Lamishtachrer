@@ -48,6 +48,10 @@ def home():
         return redirect(url_for('page', page_id=current_user.last_page_id or 1))
     return render_template('home.html', title='Home', show_progress=False)
 
+@app.route('/about')
+def about():
+    return render_template('about.html', title='About', show_progress=False)
+
 @app.route('/page/<int:page_id>', methods=['GET', 'POST'])
 @login_required
 def page(page_id):

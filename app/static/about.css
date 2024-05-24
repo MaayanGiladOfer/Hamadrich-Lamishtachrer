@@ -1,0 +1,9 @@
+@media (min-width: 992px) {
+  .rounded-lg-3 {
+    border-radius: 0.3rem;
+  }
+}
+.no-wrap {
+  white-space: pre-wrap; /* Keeps the text formatting */
+  word-wrap: break-word; /* Allows breaking within words for better responsiveness */
+}
