@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import SignupForm, LoginForm
-from app.models import User, Page
+from app.forms import SignupForm, LoginForm, SupportForm
+from app.models import User, Page, SupportClaim
 from flask_login import current_user, login_user, logout_user, login_required
 from urllib.parse import urlparse
 
@@ -51,6 +51,21 @@ def home():
 @app.route('/about')
 def about():
     return render_template('about.html', title='About', show_progress=False)
+
+@app.route('/support', methods=['GET', 'POST'])
+def support():
+    form = SupportForm()
+    if form.validate_on_submit():
+        support_claim = SupportClaim(
+            name=form.name.data,
+            email=form.email.data,
+            message=form.message.data
+        )
+        db.session.add(support_claim)
+        db.session.commit()
+        flash('Your support claim has been submitted.', 'success')
+        return redirect(url_for('support'))
+    return render_template('support.html', title='Support', form=form)
 
 @app.route('/page/<int:page_id>', methods=['GET', 'POST'])
 @login_required

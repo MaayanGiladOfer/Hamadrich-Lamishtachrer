@@ -17,7 +17,6 @@
       rel="canonical"
       href="https://getbootstrap.com/docs/5.3/examples/heroes/"
     />
-
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@docsearch/css@3"
@@ -29,6 +28,10 @@
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='about.css') }}"
+    />
+    <link
+      href="{{ url_for('static', filename='product.css') }}"
+      rel="stylesheet"
     />
 
     <style>
@@ -110,12 +113,6 @@
         display: block !important;
       }
     </style>
-
-    <!-- Custom styles for this template -->
-    <link
-      href="{{ url_for('static', filename='product.css') }}"
-      rel="stylesheet"
-    />
   </head>
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -140,7 +137,101 @@
           d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
         />
       </symbol>
+      <symbol
+        id="aperture"
+        fill="none"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <path
+          d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"
+        />
+      </symbol>
+      <symbol id="cart" viewBox="0 0 16 16">
+        <path
+          d="M0 1.5A.5.5 0 0 1 .5.5H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+        />
+      </symbol>
+      <symbol id="chevron-left" viewBox="0 0 16 16">
+        <path
+          fill-rule="evenodd"
+          d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"
+        />
+      </symbol>
+      <symbol id="chevron-right" viewBox="0 0 16 16">
+        <path
+          fill-rule="evenodd"
+          d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+        />
+      </symbol>
     </svg>
+
+    <nav
+      class="navbar navbar-expand-md bg-dark sticky-top border-bottom"
+      data-bs-theme="dark"
+    >
+      <div class="container">
+        <a class="navbar-brand d-md-none" href="#">
+          <svg class="bi" width="24" height="24">
+            <use xlink:href="#aperture" />
+          </svg>
+          Aperture
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvas"
+          aria-controls="offcanvas"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="offcanvas offcanvas-end"
+          tabindex="-1"
+          id="offcanvas"
+          aria-labelledby="offcanvasLabel"
+        >
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasLabel">Aperture</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav flex-grow-1 justify-content-between">
+              <li class="nav-item">
+                <a class="nav-link" href="home">
+                  <svg class="bi" width="24" height="24">
+                    <use xlink:href="#aperture" />
+                  </svg>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="signup">הרשמה</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="login">כניסה</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="support">תמיכה</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about">אודות</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
 
     <main>
       <h1 class="visually-hidden">Heroes examples</h1>
@@ -156,6 +247,7 @@
         <h1 class="display-5 fw-bold text-body-emphasis">About Me..</h1>
         <div class="col-lg-6 mx-auto">
           <p class="lead mb-4">
+            <br />
             Age 22, ex-military in search and rescue, passionate Junior DevOps
             Engineer.<br />
             Proficient in Python, Bash, and eager to enhance software
@@ -164,11 +256,19 @@
             first Junior DevOps role in a dynamic team!
           </p>
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">
-              Primary button
+            <button
+              type="button"
+              class="btn btn-primary btn-lg px-4 gap-3"
+              onclick="window.location.href='https://github.com/MaayanGiladOfer'"
+            >
+              GitHub Page
             </button>
-            <button type="button" class="btn btn-outline-secondary btn-lg px-4">
-              Secondary
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-lg px-4"
+              onclick="window.location.href='https://www.linkedin.com/in/maayan-ofer/'"
+            >
+              Linkedin
             </button>
           </div>
         </div>
@@ -182,6 +282,7 @@
         </h1>
         <div class="col-lg-6 mx-auto">
           <p class="lead mb-4">
+            <br />
             • Developed a hosting environment monitoring solution with Grafana
             and Prometheus on Kubernetes using Helm. <br />
             • Configured dashboards for Proxmox, Node Exporter, Kubernetes,
@@ -190,11 +291,19 @@
             installation across hosting environments.
           </p>
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
-            <button type="button" class="btn btn-primary btn-lg px-4 me-sm-3">
-              GitHub עמוד
+            <button
+              type="button"
+              class="btn btn-primary btn-lg px-4 me-sm-3"
+              onclick="window.location.href='https://github.com/MaayanGiladOfer/InsightSphere'"
+            >
+              Project GitHub
             </button>
-            <button type="button" class="btn btn-outline-secondary btn-lg px-4">
-              מאמר על הפרוייקט
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-lg px-4"
+              onclick="window.location.href='https://k8s.co.il/monitoring/project-insightsphere-a-monitoring-solution-for-data-sources/'"
+            >
+              Project Article
             </button>
           </div>
         </div>
@@ -230,7 +339,7 @@
           </div>
           <div class="col-lg-6">
             <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">
-              לימודים
+              Studies
             </h1>
             <p class="lead">
               • Transitioning directly from military service, I was thrilled to
@@ -244,68 +353,14 @@
               the field of DevOps engineering.
             </p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-              <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">
-                Primary
-              </button>
               <button
                 type="button"
-                class="btn btn-outline-secondary btn-lg px-4"
+                class="btn btn-primary btn-lg px-4 me-md-2"
+                onclick="window.location.href='https://atidim.org/%D7%A2%D7%AA%D7%99%D7%93%D7%99%D7%9D-%D7%9C%D7%AA%D7%A2%D7%A9%D7%99%D7%99%D7%94/%D7%9C%D7%95%D7%97%D7%9E%D7%99%D7%9D-%D7%9C%D7%94%D7%99%D7%99%D7%98%D7%A7/'"
               >
-                Default
+                Learn More
               </button>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="b-example-divider"></div>
-
-      <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-        <div class="row align-items-center g-lg-5 py-5">
-          <div class="col-lg-7 text-center text-lg-start">
-            <h1 class="display-4 fw-bold lh-1 text-body-emphasis mb-3">
-              Vertically centered hero sign-up form
-            </h1>
-            <p class="col-lg-10 fs-4">
-              Below is an example form built entirely with Bootstrap’s form
-              controls. Each required form group has a validation state that can
-              be triggered by attempting to submit the form without completing
-              it.
-            </p>
-          </div>
-          <div class="col-md-10 mx-auto col-lg-5">
-            <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
-              <div class="form-floating mb-3">
-                <input
-                  type="email"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder="name@example.com"
-                />
-                <label for="floatingInput">Email address</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input
-                  type="password"
-                  class="form-control"
-                  id="floatingPassword"
-                  placeholder="Password"
-                />
-                <label for="floatingPassword">Password</label>
-              </div>
-              <div class="checkbox mb-3">
-                <label>
-                  <input type="checkbox" value="remember-me" /> Remember me
-                </label>
-              </div>
-              <button class="w-100 btn btn-lg btn-primary" type="submit">
-                Sign up
-              </button>
-              <hr class="my-4" />
-              <small class="text-body-secondary"
-                >By clicking Sign up, you agree to the terms of use.</small
-              >
-            </form>
           </div>
         </div>
       </div>
@@ -316,41 +371,28 @@
         <div
           class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg"
         >
-          <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-            <h1 class="display-4 fw-bold lh-1 text-body-emphasis">
-              Border hero with cropped image and shadows
-            </h1>
-            <p class="lead">
-              Quickly design and customize responsive mobile-first sites with
-              Bootstrap, the world’s most popular front-end open source toolkit,
-              featuring Sass variables and mixins, responsive grid system,
-              extensive prebuilt components, and powerful JavaScript plugins.
-            </p>
-            <div
-              class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3"
-            >
-              <button
-                type="button"
-                class="btn btn-primary btn-lg px-4 me-md-2 fw-bold"
-              >
-                Primary
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-secondary btn-lg px-4"
-              >
-                Default
-              </button>
-            </div>
-          </div>
-          <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+          <div class="col-lg-4 p-0 overflow-hidden shadow-lg">
             <!-- Place your border hero image here -->
             <img
               class="rounded-lg-3"
-              src="{{ url_for('static', filename='../static/myimage.jpg') }}"
+              src="{{ url_for('static', filename='../static/solider2.png') }}"
               alt=""
-              width="720"
+              width="300"
             />
+          </div>
+          <div class="col-lg-7 offset-lg-1 p-3 p-lg-5 pt-lg-3 text-center">
+            <h1 class="display-4 fw-bold lh-1 text-body-emphasis">
+              Thank You!
+            </h1>
+            <p class="lead">
+              Thank you for visiting our site.<br />
+              We deeply appreciate your service and are here to support your
+              transition back to society with valuable information on rights,
+              laws, and economics and more.
+            </p>
+            <div
+              class="d-grid gap-2 d-md-flex justify-content-center mb-4 mb-lg-3"
+            ></div>
           </div>
         </div>
       </div>
@@ -359,23 +401,16 @@
 
       <div class="bg-dark text-secondary px-4 py-5 text-center">
         <div class="py-5">
-          <h1 class="display-5 fw-bold text-white">Dark color hero</h1>
+          <h1 class="display-5 fw-bold text-white">?לא רשום עדיין</h1>
           <div class="col-lg-6 mx-auto">
-            <p class="fs-5 mb-4">
-              Quickly design and customize responsive mobile-first sites with
-              Bootstrap, the world’s most popular front-end open source toolkit,
-              featuring Sass variables and mixins, responsive grid system,
-              extensive prebuilt components, and powerful JavaScript plugins.
-            </p>
+            <p class="fs-5 mb-4">!חבל לבזבז זמן.. הרשם עכשיו</p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
               <button
                 type="button"
                 class="btn btn-outline-info btn-lg px-4 me-sm-3 fw-bold"
+                onclick="window.location.href='{{ url_for('signup') }}'"
               >
-                Custom button
-              </button>
-              <button type="button" class="btn btn-outline-light btn-lg px-4">
-                Secondary
+                הרשם
               </button>
             </div>
           </div>
