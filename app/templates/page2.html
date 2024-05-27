@@ -1,9 +1,65 @@
 {% extends "base.html" %} {% block content %}
-<div style="direction: rtl; text-align: right">
-  <h1>ברוכים הבאים!</h1>
-  <p>מלל מלל ועוד מלל</p>
-  <a href="{{ url_for('page', page_id=3) }}" class="btn btn-primary"
+<div
+  class="container"
+  style="direction: rtl; text-align: right; margin-top: 30px"
+>
+  <h1 class="display-4 mb-4">
+    <strong>מענק שחרור</strong>
+  </h1>
+  <p class="lead mb-4">
+    מענק השחרור הוא חלק מרגש ומשמעותי עבור כל חייל משתחרר, המוענק כעזרה ראשונה
+    לאחר השירות הצבאי. <br />
+    המענק מופקד ישירות לחשבון הבנק של החייל תוך 60 יום מהשחרור, וגובהו נקבע לפי
+    אורך וסוג השירות (לוחמים, תומכי לחימה או שירות אחר).<br />
+    הסכום משתנה בהתאם לשירות, כאשר לוחמים זכאים לסכום גבוה יותר.
+  </p>
+  <p class="mb-3">
+    המענק מאפשר לחיילים המשתחררים להתחיל את דרכם האזרחית עם בסיס כלכלי יציב,
+    להמשיך ללימודים, להקים עסק, או להשתמש בו לכל מטרה אחרת.
+  </p>
+  <p class="mb-3">
+    בוא נחשב את המענק לחייל ששירת כלוחם במשך שנתיים ושמונה חודשים (32 חודשים),
+    עם חודשיים טירונות שנחשבים כתומך לחימה.
+  </p>
+  <img
+    src="{{ url_for('static', filename='../static/mahanak.png') }}"
+    class="img-fluid border rounded-3 shadow-lg mb-4"
+    alt="Example image"
+    width="500"
+    height="500"
+    loading="lazy"
+  />
+
+  <p class="mb-5">
+    *הערות: מסלול אזרחי ביניים ומסלול אזרחי מפוצל מתייחסים למסלולים ייחודיים
+    בעלי אופי אזרחי מסוים במהלך השירות.
+  </p>
+
+  <p class="mb-4">
+    <strong>חישוב מענק:</strong><br />
+    חודשי שירות כלוחם:<br />
+    30 חודשים (2 שנים ו-8 חודשים פחות 2 חודשים של טירונות). סכום למשרת קרבי:
+    כ-650.60 ש"ח לחודש. סך הכל: 30 חודשים x 650.60 ש"ח = 19,518 ש"ח <br />
+
+    חודשי שירות כתומך לחימה:<br />
+    2 חודשים. סכום למשרת תומך לחימה: 541.78 ש"ח לחודש. סך הכל: 2 חודשים x 541.78
+    ש"ח = 1,083.56 ש"ח.
+    <br />
+    סה"כ מענק שחרור: 19,518 ש"ח + 1,083.56 ש"ח = <strong>20,601.56 ש"ח.</strong>
+  </p>
+</p>
+למחשבון מענק שחרור:
+<a
+  href="https://www.hachvana.mod.gov.il/GrantAndDeposit/DepositUpTo5/Pages/default.aspx"
+  target="_blank"
+  >לחצו כאן</a
+>.
+</p>  
+<a href="{{ url_for('page', page_id=3) }}" class="btn btn-primary"
     >עמוד הבא</a
   >
-  {% endblock %}
+  <button onclick="window.history.back()" class="btn btn-secondary">
+    חזור לעמוד הקודם
+  </button>
 </div>
+{% endblock %}

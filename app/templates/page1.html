@@ -1,9 +1,34 @@
 {% extends "base.html" %} {% block content %}
-<div style="direction: rtl; text-align: right">
-  <h1>ברוכים הבאים!</h1>
-  <p>מלל מלל ועוד מלל</p>
-  <a href="{{ url_for('page', page_id=2) }}" class="btn btn-primary"
+<div
+  class="container"
+  style="direction: rtl; text-align: right; margin-top: 30px"
+>
+  <h1 class="display-4 mb-4">
+    <strong>ברוכים הבאים לאתר "המדריך למשתחרר"</strong>
+  </h1>
+  <p class="lead mb-4">
+    פרויקט זה נבנה במטרה לספק לכם את כל המידע הנחוץ לקראת השחרור מצה"ל והמעבר
+    לחיים האזרחיים.<br />
+    האתר מחולק לשלושה חלקים עיקריים:
+  </p>
+  <p class="mb-3">
+    <strong>חלק א: זכויות</strong> - כאן תמצאו מידע מפורט על כל הזכויות המגיעות
+    לכם כחיילים משוחררים, כמו מענקים, פיקדון אישי, פטורים ומלגות, ועוד.
+  </p>
+  <p class="mb-3">
+    <strong>חלק ב: חובות</strong> - בחלק זה נפרט על החובות השונות שיש להכיר
+    ולמלא, כולל נושאים כמו מיסים, ביטוח לאומי ועוד.
+  </p>
+  <p class="mb-4">
+    <strong>חלק ג: מושגים כלליים</strong> - מילון מונחים שיסייע לכם להבין את כל
+    המושגים והתהליכים החשובים, כולל ניהול פיננסי, סיוע משפטי ועוד.
+  </p>
+  <p class="mb-4">
+    אנו כאן כדי ללוות אתכם בכל שלב ולהבטיח שתתחילו את חייכם האזרחיים בצורה הטובה
+    ביותר. בהצלחה!
+  </p>
+  <a href="{{ url_for('page', page_id=2) }}" class="btn btn-primary btn-lg"
     >עמוד הבא</a
   >
-  {% endblock %}
 </div>
+{% endblock %}
