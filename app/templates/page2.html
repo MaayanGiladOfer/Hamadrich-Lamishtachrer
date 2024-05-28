@@ -58,8 +58,8 @@
 <a href="{{ url_for('page', page_id=3) }}" class="btn btn-primary"
     >עמוד הבא</a
   >
-  <button onclick="window.history.back()" class="btn btn-secondary">
-    חזור לעמוד הקודם
-  </button>
+  <a href="{{ url_for('page', page_id=1) }}" class="btn btn-secondary"
+  >חזור לעמוד הקודם</a>
+</div>
 </div>
 {% endblock %}
