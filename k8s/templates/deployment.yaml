@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hamadrich-app
+  labels:
+    app: web-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app
+    spec:
+      initContainers:
+        - name: wait-for-database
+          image: busybox:1.28
+          command:
+            - "sh"
+            - "-c"
+            - 'until nc -z -v -w30 hamadrich-database 3306; do echo "waiting for database"; sleep 5; done'
+      containers:
+        - name: hamadrich-web
+          image: manofer/hamadrich-lamishtachrer:0.1
+          ports:
+            - containerPort: 5000
+          env:
+            - name: FLASK_APP
+              value: "run.py"
+            - name: FLASK_ENV
+              value: "development"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
