@@ -1,18 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hamadrich-ingress
+  name: { { .Values.ingress.name } }
   annotations:
-    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/ingress.class:
+      { { .Values.ingress.annotations."kubernetes.io/ingress.class" } }
 spec:
   rules:
-    - host: hamadrich-lamishtachrer.com
+    - host: { { .Values.ingress.rules.host } }
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: { { .Values.ingress.rules.path } }
+            pathType: { { .Values.ingress.rules.pathType } }
             backend:
               service:
-                name: hamadrich-app-service
+                name: { { .Values.ingress.rules.backend.serviceName } }
                 port:
-                  number: 80
+                  number: { { .Values.ingress.rules.backend.servicePort } }

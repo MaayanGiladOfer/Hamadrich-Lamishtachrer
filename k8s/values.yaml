@@ -22,9 +22,27 @@ app:
     command: "until nc -z -v -w30 {{ .Values.database.service }} {{ .Values.database.port }}; do echo 'waiting for database'; sleep 5; done"
 
 database:
+  name: "hamadrich-database"
   labels:
     app: "database"
   port: 3306
+  replicas: 3
+  container:
+    name: "mysql"
+    image: "mysql:8"
+    ports:
+      containerPort: 3306
+    env:
+      MYSQL_DATABASE: "mydb"
+      MYSQL_USER: "freesoldier"
+      MYSQL_PASSWORD: "AdMaTai2020"
+      MYSQL_ROOT_PASSWORD: "AdMaTai2020"
+    volumeMounts:
+      name: "mysql-persistent-storage"
+      mountPath: "/var/lib/mysql"
+  volumeClaimTemplates:
+    accessModes: ["ReadWriteOnce"]
+    storage: "1Gi"
 
 service-app:
   name: "hamadrich-app-service"
@@ -40,3 +58,23 @@ service-db:
   protocol: TCP
 
 ingress:
+  name: "hamadrich-ingress"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+  rules:
+    host: "hamadrich-lamishtachrer.com"
+    path: "/"
+    pathType: "Prefix"
+    backend:
+      serviceName: "hamadrich-app-service"
+      servicePort: 80
+
+metallb:
+  ipAddressPool:
+    name: "example"
+    namespace: "metallb-system"
+    addresses:
+      - "172.19.255.200-172.19.255.250"
+  l2Advertisement:
+    name: "empty"
+    namespace: "metallb-system"

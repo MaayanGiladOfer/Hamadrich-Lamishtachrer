@@ -1,42 +1,44 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: hamadrich-database
+  name: { { .Values.database.name } }
   labels:
-    app: database
+    app: { { .Values.database.labels.app } }
 spec:
-  serviceName: hamadrich-database-service
-  replicas: 3
+  serviceName: { { .Values.service-db.name } }
+  replicas: { { .Values.database.replicas } }
   selector:
     matchLabels:
-      app: database
+      app: { { .Values.database.labels.app } }
   template:
     metadata:
       labels:
-        app: database
+        app: { { .Values.database.labels.app } }
     spec:
       containers:
-        - name: mysql
-          image: mysql:8
+        - name: { { .Values.database.container.name } }
+          image: { { .Values.database.container.image } }
           ports:
-            - containerPort: 3306
+            - containerPort:
+                { { .Values.database.container.ports.containerPort } }
           env:
             - name: MYSQL_DATABASE
-              value: mydb
+              value: { { .Values.database.container.env.MYSQL_DATABASE } }
             - name: MYSQL_USER
-              value: freesoldier
+              value: { { .Values.database.container.env.MYSQL_USER } }
             - name: MYSQL_PASSWORD
-              value: AdMaTai2020
+              value: { { .Values.database.container.env.MYSQL_PASSWORD } }
             - name: MYSQL_ROOT_PASSWORD
-              value: AdMaTai2020
+              value: { { .Values.database.container.env.MYSQL_ROOT_PASSWORD } }
           volumeMounts:
-            - name: mysql-persistent-storage
-              mountPath: /var/lib/mysql
+            - name: { { .Values.database.container.volumeMounts.name } }
+              mountPath:
+                { { .Values.database.container.volumeMounts.mountPath } }
   volumeClaimTemplates:
     - metadata:
-        name: mysql-persistent-storage
+        name: { { .Values.database.container.volumeMounts.name } }
       spec:
-        accessModes: ["ReadWriteOnce"]
+        accessModes: { { .Values.database.volumeClaimTemplates.accessModes } }
         resources:
           requests:
-            storage: 1Gi
+            storage: { { .Values.database.volumeClaimTemplates.storage } }
