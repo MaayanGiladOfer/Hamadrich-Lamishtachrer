@@ -20,7 +20,7 @@ spec:
           command:
             - "sh"
             - "-c"
-            - 'until nc -z -v -w30 hamadrich-database 3306; do echo "waiting for database"; sleep 5; done'
+            - 'until nc -z -v -w30 hamadrich-database-service 3306; do echo "waiting for database"; sleep 5; done'
       containers:
         - name: hamadrich-web
           image: manofer/hamadrich-lamishtachrer:0.1
@@ -31,6 +31,8 @@ spec:
               value: "run.py"
             - name: FLASK_ENV
               value: "development"
+            - name: DATABASE_URL
+              value: "mysql+pymysql://freesoldier:AdMaTai2020@hamadrich-database-service/mydb"
           resources:
             requests:
               memory: "64Mi"

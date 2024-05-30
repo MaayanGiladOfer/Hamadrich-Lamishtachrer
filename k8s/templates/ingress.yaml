@@ -3,10 +3,10 @@ kind: Ingress
 metadata:
   name: hamadrich-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
-    - host: hamadraich-lamishtachrer.com
+    - host: hamadrich-lamishtachrer.com
       http:
         paths:
           - path: /
