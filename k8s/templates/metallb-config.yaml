@@ -8,7 +8,7 @@ metadata:
 spec:
   # Specify the range of IP addresses to allocate
   addresses:
-    - 172.18.255.200-172.18.255.250
+    - 172.19.255.200-172.19.255.250
 ---
 # Define an L2Advertisement resource for MetalLB
 apiVersion: metallb.io/v1beta1
