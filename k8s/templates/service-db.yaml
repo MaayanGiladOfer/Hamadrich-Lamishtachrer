@@ -6,7 +6,7 @@ metadata:
     app: database
 spec:
   ports:
-    - port: 3307
+    - port: 3306
       name: http
   clusterIP: None
   selector:
