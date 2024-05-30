@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hamadrich-database-service
+  name: { { .Values.service-db.name } }
   labels:
-    app: database
+    app: { { .Values.database.labels.app } }
 spec:
   ports:
-    - port: 3306
-      name: http
-  clusterIP: None
+    - port: { { .Values.service-db.port } }
+      name: { { .Values.service-db.portName } }
+  clusterIP: { { .Values.service-db.clusterIP } }
   selector:
-    app: database
+    app: { { .Values.database.labels.app } }

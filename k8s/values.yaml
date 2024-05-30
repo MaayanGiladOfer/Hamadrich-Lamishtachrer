@@ -1,0 +1,42 @@
+app:
+  name: "hamadrich-app"
+  labels:
+    app: "web-app"
+  replicas: 3
+  image: "manofer/hamadrich-lamishtachrer:0.1"
+  containerPort: 5000
+  env:
+    FLASK_APP: "run.py"
+    FLASK_ENV: "development"
+    DATABASE_URL: "mysql+pymysql://freesoldier:AdMaTai2020@hamadrich-database-service/mydb"
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "250m"
+    limits:
+      memory: "128Mi"
+      cpu: "500m"
+  initContainer:
+    name: "wait-for-database"
+    image: "busybox:1.28"
+    command: "until nc -z -v -w30 {{ .Values.database.service }} {{ .Values.database.port }}; do echo 'waiting for database'; sleep 5; done"
+
+database:
+  labels:
+    app: "database"
+  port: 3306
+
+service-app:
+  name: "hamadrich-app-service"
+  port: 80
+  targetPort: 5000
+  type: "ClusterIP"
+
+service-db:
+  name: "hamadrich-database-service"
+  port: 3306
+  portName: "http"
+  clusterIP: "None"
+  protocol: TCP
+
+ingress:

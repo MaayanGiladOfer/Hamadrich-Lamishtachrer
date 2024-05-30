@@ -1,42 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hamadrich-app
+  name: { { .Values.app.name } }
   labels:
-    app: web-app
+    app: { { .Values.app.labels.app } }
 spec:
-  replicas: 3
+  replicas: { { .Values.app.replicas } }
   selector:
     matchLabels:
-      app: web-app
+      app: { { .Values.app.labels.app } }
   template:
     metadata:
       labels:
-        app: web-app
+        app: { { .Values.app.labels.app } }
     spec:
       initContainers:
-        - name: wait-for-database
-          image: busybox:1.28
-          command:
-            - "sh"
-            - "-c"
-            - 'until nc -z -v -w30 hamadrich-database-service 3306; do echo "waiting for database"; sleep 5; done'
+        - name: { { .Values.app.initContainer.name } }
+          image: { { .Values.app.initContainer.image } }
+          command: ["sh", "-c", "{{ .Values.app.initContainer.command }}"]
       containers:
-        - name: hamadrich-web
-          image: manofer/hamadrich-lamishtachrer:0.1
+        - name: { { .Values.app.name } }
+          image: { { .Values.app.image } }
           ports:
-            - containerPort: 5000
+            - containerPort: { { .Values.app.containerPort } }
           env:
             - name: FLASK_APP
-              value: "run.py"
+              value: { { .Values.app.env.FLASK_APP } }
             - name: FLASK_ENV
-              value: "development"
+              value: { { .Values.app.env.FLASK_ENV } }
             - name: DATABASE_URL
-              value: "mysql+pymysql://freesoldier:AdMaTai2020@hamadrich-database-service/mydb"
+              value: { { .Values.app.env.DATABASE_URL } }
           resources:
             requests:
-              memory: "64Mi"
-              cpu: "250m"
+              memory: { { .Values.app.resources.requests.memory } }
+              cpu: { { .Values.app.resources.requests.cpu } }
             limits:
-              memory: "128Mi"
-              cpu: "500m"
+              memory: { { .Values.app.resources.limits.memory } }
+              cpu: { { .Values.app.resources.limits.cpu } }
