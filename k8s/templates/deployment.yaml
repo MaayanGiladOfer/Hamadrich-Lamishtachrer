@@ -15,12 +15,17 @@ spec:
         app: {{ .Values.app.labels.app }}
     spec:
       initContainers:
-        - name: {{ .Values.app.initContainer.name }}
-          image: {{ .Values.app.initContainer.image }}
+        - name: init-mysql
+          image: mysql:8
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.credentials.root.password }}
           command:
-            - "sh"
-            - "-c"
-            - 'until nc -z -v -w30 hamadrich-database-service 3306; do echo "waiting for database"; sleep 5; done'
+            - sh
+            - -c
+            - >
+              until mysqladmin ping -h mycluster.mysql-operator.svc.cluster.local --silent; do echo 'waiting for database'; sleep 5; done;
+              mysql -u {{ .Values.credentials.root.user }} -p$MYSQL_ROOT_PASSWORD -h mycluster.mysql-operator.svc.cluster.local -e "CREATE DATABASE IF NOT EXISTS {{ .Values.db.name }};"
       containers:
         - name: {{ .Values.app.name }}
           image: {{ .Values.app.image }}
@@ -32,7 +37,7 @@ spec:
             - name: FLASK_ENV
               value: {{ .Values.app.env.FLASK_ENV }}
             - name: DATABASE_URL
-              value: {{ .Values.app.env.DATABASE_URL }}
+              value: "mysql+pymysql://{{ .Values.credentials.root.user }}:{{ .Values.credentials.root.password }}@mycluster.mysql-operator.svc.cluster.local:3306/{{ .Values.db.name }}"
           resources:
             requests:
               memory: {{ .Values.app.resources.requests.memory }}
@@ -40,3 +45,4 @@ spec:
             limits:
               memory: {{ .Values.app.resources.limits.memory }}
               cpu: {{ .Values.app.resources.limits.cpu }}
+

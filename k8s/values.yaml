@@ -8,7 +8,6 @@ app:
   env:
     FLASK_APP: "run.py"
     FLASK_ENV: "development"
-    DATABASE_URL: "mysql+pymysql://freesoldier:AdMaTai2020@hamadrich-database-service/mydb"
   resources:
     requests:
       memory: "64Mi"
@@ -21,41 +20,19 @@ app:
     image: "busybox:1.28"
     command: "until nc -z -v -w30 {{ .Values.database.service }} {{ .Values.database.port }}; do echo 'waiting for database'; sleep 5; done"
 
-database:
-  name: "hamadrich-database"
-  labels:
-    app: "database"
-  port: 3306
-  replicas: 2
-  container:
-    name: "mysql"
-    image: "mysql:8"
-    ports:
-      containerPort: 3306
-    env:
-      MYSQL_DATABASE: "mydb"
-      MYSQL_USER: "freesoldier"
-      MYSQL_PASSWORD: "AdMaTai2020"
-      MYSQL_ROOT_PASSWORD: "AdMaTai2020"
-    volumeMounts:
-      name: "mysql-persistent-storage"
-      mountPath: "/var/lib/mysql"
-  volumeClaimTemplates:
-    accessModes: "ReadWriteOnce"
-    storage: "1Gi"
+db:
+  name: mydb
+
+credentials:
+  root:
+    user: root
+    password: "AdMaTai2020"
 
 serviceApp:
   name: "hamadrich-app-service"
   port: 80
   targetPort: 5000
   type: "ClusterIP"
-
-serviceDB:
-  name: "hamadrich-database-service"
-  port: 3306
-  portName: "http"
-  clusterIP: "None"
-  protocol: TCP
 
 ingress:
   name: "hamadrich-ingress"
