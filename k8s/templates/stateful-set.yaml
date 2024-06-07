@@ -1,44 +1,44 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: { { .Values.database.name } }
+  name: {{ .Values.database.name }}
   labels:
-    app: { { .Values.database.labels.app } }
+    app: {{ .Values.database.labels.app }}
 spec:
-  serviceName: { { .Values.service-db.name } }
-  replicas: { { .Values.database.replicas } }
+  serviceName: {{ .Values.serviceDB.name }}
+  replicas: {{ .Values.database.replicas }}
   selector:
     matchLabels:
-      app: { { .Values.database.labels.app } }
+      app: {{ .Values.database.labels.app }}
   template:
     metadata:
       labels:
-        app: { { .Values.database.labels.app } }
+        app: {{ .Values.database.labels.app }}
     spec:
       containers:
-        - name: { { .Values.database.container.name } }
-          image: { { .Values.database.container.image } }
+        - name: {{ .Values.database.container.name }}
+          image: {{ .Values.database.container.image }}
           ports:
-            - containerPort:
-                { { .Values.database.container.ports.containerPort } }
+            - containerPort: {{ .Values.database.container.ports.containerPort }}
           env:
             - name: MYSQL_DATABASE
-              value: { { .Values.database.container.env.MYSQL_DATABASE } }
+              value: {{ .Values.database.container.env.MYSQL_DATABASE }}
             - name: MYSQL_USER
-              value: { { .Values.database.container.env.MYSQL_USER } }
+              value: {{ .Values.database.container.env.MYSQL_USER }}
             - name: MYSQL_PASSWORD
-              value: { { .Values.database.container.env.MYSQL_PASSWORD } }
+              value: {{ .Values.database.container.env.MYSQL_PASSWORD }}
             - name: MYSQL_ROOT_PASSWORD
-              value: { { .Values.database.container.env.MYSQL_ROOT_PASSWORD } }
+              value: {{ .Values.database.container.env.MYSQL_ROOT_PASSWORD }}
           volumeMounts:
-            - name: { { .Values.database.container.volumeMounts.name } }
-              mountPath:
-                { { .Values.database.container.volumeMounts.mountPath } }
+            - name: {{ .Values.database.container.volumeMounts.name }}
+              mountPath: {{ .Values.database.container.volumeMounts.mountPath }}
   volumeClaimTemplates:
     - metadata:
-        name: { { .Values.database.container.volumeMounts.name } }
+        name: {{ .Values.database.container.volumeMounts.name }}
       spec:
-        accessModes: { { .Values.database.volumeClaimTemplates.accessModes } }
+        accessModes: 
+          - {{ .Values.database.volumeClaimTemplates.accessModes }}
         resources:
           requests:
-            storage: { { .Values.database.volumeClaimTemplates.storage } }
+            storage: {{ .Values.database.volumeClaimTemplates.storage }}
+

@@ -1,39 +1,42 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { .Values.app.name } }
+  name: {{ .Values.app.name }}
   labels:
-    app: { { .Values.app.labels.app } }
+    app: {{ .Values.app.labels.app }}
 spec:
-  replicas: { { .Values.app.replicas } }
+  replicas: {{ .Values.app.replicas }}
   selector:
     matchLabels:
-      app: { { .Values.app.labels.app } }
+      app: {{ .Values.app.labels.app }}
   template:
     metadata:
       labels:
-        app: { { .Values.app.labels.app } }
+        app: {{ .Values.app.labels.app }}
     spec:
       initContainers:
-        - name: { { .Values.app.initContainer.name } }
-          image: { { .Values.app.initContainer.image } }
-          command: ["sh", "-c", "{{ .Values.app.initContainer.command }}"]
+        - name: {{ .Values.app.initContainer.name }}
+          image: {{ .Values.app.initContainer.image }}
+          command:
+            - "sh"
+            - "-c"
+            - 'until nc -z -v -w30 hamadrich-database-service 3306; do echo "waiting for database"; sleep 5; done'
       containers:
-        - name: { { .Values.app.name } }
-          image: { { .Values.app.image } }
+        - name: {{ .Values.app.name }}
+          image: {{ .Values.app.image }}
           ports:
-            - containerPort: { { .Values.app.containerPort } }
+            - containerPort: {{ .Values.app.containerPort }}
           env:
             - name: FLASK_APP
-              value: { { .Values.app.env.FLASK_APP } }
+              value: {{ .Values.app.env.FLASK_APP }}
             - name: FLASK_ENV
-              value: { { .Values.app.env.FLASK_ENV } }
+              value: {{ .Values.app.env.FLASK_ENV }}
             - name: DATABASE_URL
-              value: { { .Values.app.env.DATABASE_URL } }
+              value: {{ .Values.app.env.DATABASE_URL }}
           resources:
             requests:
-              memory: { { .Values.app.resources.requests.memory } }
-              cpu: { { .Values.app.resources.requests.cpu } }
+              memory: {{ .Values.app.resources.requests.memory }}
+              cpu: {{ .Values.app.resources.requests.cpu }}
             limits:
-              memory: { { .Values.app.resources.limits.memory } }
-              cpu: { { .Values.app.resources.limits.cpu } }
+              memory: {{ .Values.app.resources.limits.memory }}
+              cpu: {{ .Values.app.resources.limits.cpu }}

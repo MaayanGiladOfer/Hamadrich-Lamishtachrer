@@ -5,4 +5,4 @@ metadata:
   namespace: {{ .Values.metallb.ipAddressPool.namespace }}
 spec:
   addresses:
-    - {{ .Values.metallb.ipAddressPool.addresses[0] }}
+    - {{ index .Values.metallb.ipAddressPool.addresses 0 }}

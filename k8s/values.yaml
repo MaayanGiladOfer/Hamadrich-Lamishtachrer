@@ -2,7 +2,7 @@ app:
   name: "hamadrich-app"
   labels:
     app: "web-app"
-  replicas: 3
+  replicas: 2
   image: "manofer/hamadrich-lamishtachrer:0.1"
   containerPort: 5000
   env:
@@ -26,7 +26,7 @@ database:
   labels:
     app: "database"
   port: 3306
-  replicas: 3
+  replicas: 2
   container:
     name: "mysql"
     image: "mysql:8"
@@ -41,16 +41,16 @@ database:
       name: "mysql-persistent-storage"
       mountPath: "/var/lib/mysql"
   volumeClaimTemplates:
-    accessModes: ["ReadWriteOnce"]
+    accessModes: "ReadWriteOnce"
     storage: "1Gi"
 
-service-app:
+serviceApp:
   name: "hamadrich-app-service"
   port: 80
   targetPort: 5000
   type: "ClusterIP"
 
-service-db:
+serviceDB:
   name: "hamadrich-database-service"
   port: 3306
   portName: "http"
@@ -60,7 +60,7 @@ service-db:
 ingress:
   name: "hamadrich-ingress"
   annotations:
-    kubernetes.io/ingress.class: "nginx"
+    ingressClass: "nginx"
   rules:
     host: "hamadrich-lamishtachrer.com"
     path: "/"
@@ -74,7 +74,7 @@ metallb:
     name: "example"
     namespace: "metallb-system"
     addresses:
-      - "172.19.255.200-172.19.255.250"
+      - "172.18.255.200-172.18.255.250"
   l2Advertisement:
     name: "empty"
     namespace: "metallb-system"
