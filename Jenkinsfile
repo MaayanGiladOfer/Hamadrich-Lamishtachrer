@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        maven 'maven' // Use the name you provided in the Global Tool Configuration
+    }
     environment {
         DOCKER_REGISTRY = "hub.docker.com"
         DOCKER_IMAGE = "${env.DOCKER_REGISTRY}/manofer/hamadrich-lamishtachrer:0.1.${env.BUILD_NUMBER}"
@@ -10,12 +13,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
-                    try {
                         git url: 'https://github.com/MaayanGiladOfer/Hamadrich-Lamishtachrer.git', branch: 'development'
-                    } catch (Exception e) {
-                        echo "Error during Git checkout: ${e.message}"
-                        error("Stopping pipeline due to Git checkout failure")
-                    }
                 }
             }
         }
