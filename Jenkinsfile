@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/MaayanGiladOfer/Hamadrich-Lamishtachrer.git'
+                git url: 'https://github.com/MaayanGiladOfer/Hamadrich-Lamishtachrer.git'
             }
         }
         stage('Build and Test') {
