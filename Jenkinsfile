@@ -2,6 +2,7 @@ pipeline {
     agent any
     tools {
         maven 'maven' // Use the name you provided in the Global Tool Configuration
+        terraform 'terraform'
     }
     environment {
         DOCKER_REGISTRY = "hub.docker.com"
