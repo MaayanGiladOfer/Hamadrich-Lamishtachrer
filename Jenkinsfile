@@ -1,14 +1,15 @@
 pipeline {
     agent any
     environment {
-        DOCKER_REGISTRY = "your-docker-registry"
-        DOCKER_IMAGE = "${env.DOCKER_REGISTRY}/your-app:${env.BUILD_NUMBER}"
-        KUBECONFIG_LOCAL = "/path/to/oracle/kubeconfig"
+        DOCKER_REGISTRY = "hub.docker.com"
+        DOCKER_IMAGE = "${env.DOCKER_REGISTRY}/manofer/hamadrich-lamishtachrer:0.1.${env.BUILD_NUMBER}"
+        KUBECONFIG_LOCAL = "/home/maayan/.kube/config"
+        KUBECONFIG_AWS = ""  
     }
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://your-git-repo.git'
+                git 'https://github.com/MaayanGiladOfer/Hamadrich-Lamishtachrer.git'
             }
         }
         stage('Build and Test') {
@@ -20,7 +21,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build(DOCKER_IMAGE)
+                    docker.build("${DOCKER_IMAGE}")
                 }
             }
         }
@@ -28,7 +29,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'docker-credentials') {
-                        docker.image(DOCKER_IMAGE).push()
+                        docker.image("${DOCKER_IMAGE}").push()
                     }
                 }
             }
