@@ -1,19 +1,30 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ .Values.ingress.name }}
+  name: { { .Values.ingress.name } }
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.ingress.annotations.ingressClass }}
+    kubernetes.io/ingress.class:
+      { { .Values.ingress.annotations.ingressClass } }
 spec:
   rules:
-    - host: {{ .Values.ingress.rules.host }}
+    - host: { { .Values.ingress.rules.appHost } }
       http:
         paths:
-          - path: {{ .Values.ingress.rules.path }}
-            pathType: {{ .Values.ingress.rules.pathType }}
+          - path: { { .Values.ingress.rules.path } }
+            pathType: { { .Values.ingress.rules.pathType } }
             backend:
               service:
-                name: {{ .Values.ingress.rules.backend.serviceName }}
+                name: { { .Values.ingress.rules.backend.appServiceName } }
                 port:
-                  number: {{ .Values.ingress.rules.backend.servicePort }}
-
+                  number: { { .Values.ingress.rules.backend.servicePort } }
+    - host: { { .Values.ingress.rules.jenkinsHost } }
+      http:
+        paths:
+          - path: { { .Values.ingress.rules.path } }
+            pathType: { { .Values.ingress.rules.pathType } }
+            backend:
+              service:
+                name: { { .Values.ingress.rules.backend.jenkinsServiceName } }
+                port:
+                  number:
+                    { { .Values.ingress.rules.backend.jenkinsServicePort } }

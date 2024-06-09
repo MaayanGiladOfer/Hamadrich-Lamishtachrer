@@ -39,12 +39,15 @@ ingress:
   annotations:
     ingressClass: "nginx"
   rules:
-    host: "hamadrich-lamishtachrer.com"
+    appHost: "hamadrich-lamishtachrer.com"
+    jenkinsHost: "hamadrich-Jenkins.com"
     path: "/"
     pathType: "Prefix"
     backend:
-      serviceName: "hamadrich-app-service"
-      servicePort: 80
+      appServiceName: "hamadrich-app-service"
+      jenkinsServiceName: "jenkins"
+      appServicePort: 80
+      jenkinsServicePort: 8080
 
 metallb:
   ipAddressPool:
