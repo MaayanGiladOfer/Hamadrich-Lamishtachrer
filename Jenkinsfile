@@ -9,7 +9,14 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git url: 'https://github.com/MaayanGiladOfer/Hamadrich-Lamishtachrer.git' , branch: 'development'
+                script {
+                    try {
+                        git url: 'https://github.com/MaayanGiladOfer/Hamadrich-Lamishtachrer.git', branch: 'development'
+                    } catch (Exception e) {
+                        echo "Error during Git checkout: ${e.message}"
+                        error("Stopping pipeline due to Git checkout failure")
+                    }
+                }
             }
         }
         stage('Build and Test') {
